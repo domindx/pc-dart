@@ -54,11 +54,20 @@ void main() {
         ASN1Utils.calculateValueStartPosition(
             Uint8List.fromList([0x30, 0x82, 0x01, 0x26])),
         4);
+
+    // Test with length equal 127
+    expect(
+        ASN1Utils.calculateValueStartPosition(
+            Uint8List.fromList([0x30, 0x7F, 0x01, 0x26])),
+        129); // OR 2 ?
+    // should it fall under above or below case?
+
     // Test with length less than 127
     expect(
         ASN1Utils.calculateValueStartPosition(
             Uint8List.fromList([0x02, 0x01, 0x00])),
         2);
+
     // Test with only one byte
     try {
       ASN1Utils.calculateValueStartPosition(Uint8List.fromList([0x0]));
